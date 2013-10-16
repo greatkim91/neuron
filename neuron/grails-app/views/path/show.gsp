@@ -140,10 +140,14 @@
 		</div>
 		
 		<div>
-			<g:form controller="path" action="deliver" method="post">
+			<g:form action="deliver" method="post">
 				<g:hiddenField name="id" value="${pathInstance?.id}" />
-				<g:textField name="next_username"/>
-				<g:actionSubmit action="deliver" value="Deliver"/>
+			<ul>
+				<g:each in="${relationshipInstances}" var="relationshipInstance">
+				<li><g:checkBox name="next_user_id" value="${relationshipInstance.friend.id}" checked="false"/> <g:fieldValue bean="${relationshipInstance}" field="friend.name"/> </li>
+				</g:each>
+			</ul>
+			<g:actionSubmit action="deliver" value="Deliver"/>
 			</g:form>
 		</div>
 		

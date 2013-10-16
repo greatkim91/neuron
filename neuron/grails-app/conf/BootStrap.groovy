@@ -1,6 +1,7 @@
 import com.kkk.neuron.auth.Role
 import com.kkk.neuron.auth.User
 import com.kkk.neuron.auth.UserRole
+import com.kkk.neuron.quest.Relationship
 import com.kkk.neuron.quest.Reward
 
 class BootStrap {
@@ -28,6 +29,18 @@ class BootStrap {
 			balance: 1000
 			).save(flush: true)
 		
+			
+		newRelationship "dykim", "dwkim"
+		newRelationship "dykim", "yjkim"
+		
+		newRelationship "dwkim", "aa0"
+		newRelationship "dwkim", "aa1"
+		newRelationship "dwkim", "aa3"
+		
+		newRelationship "yjkim", "aa5"
+		newRelationship "yjkim", "aa6"
+		newRelationship "yjkim", "aa7"
+		
 		assert User.count() == 13
 		assert Role.count() == 2
 		assert UserRole.count() == 13
@@ -38,6 +51,13 @@ class BootStrap {
 		testUser.save(flush: true)
 		
 		UserRole.create testUser, role, true
+	}
+	
+	private newRelationship(String ownerName, String friendName) {
+		def owner = User.findByUsername ownerName
+		def friend = User.findByUsername friendName
+		
+		new Relationship(owner:owner, friend: friend).save(flush: true)
 	}
 	
     def destroy = {

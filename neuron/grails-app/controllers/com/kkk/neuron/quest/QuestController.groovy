@@ -57,9 +57,10 @@ class QuestController {
             return
         }
 		
-		def pathInstances = Path.findAllByQuest(questInstance);
-
-        [questInstance: questInstance, pathInstances: pathInstances]
+		def pathInstances = Path.findAllByQuest(questInstance)
+		def relationshipInstances = Relationship.findAllByOwner(springSecurityService.currentUser)
+		
+        [questInstance: questInstance, pathInstances: pathInstances, relationshipInstances: relationshipInstances]
     }
 
     def edit(Long id) {
@@ -130,22 +131,22 @@ class QuestController {
 			return
 		}
 		
-		def nextUser = User.findByUsername(params.next_username)
-		if (!nextUser) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.next_username])
-			redirect(action: "show", id: params.id)
-			return
-		}
-		
-		def newPath = new Path(quest: quest, user: nextUser)
-		
-		if (!newPath.save(flush: true)) {
-			path.errors.each {
-				println it
+		params.next_user_id.each {
+			def nextUser = User.get(it)
+			if (!nextUser) {
+				return
 			}
-			render 'error'
-			return
+			
+			def newPath = new Path(quest: quest, user: nextUser)
+			if (!newPath.save(flush: true)) {
+				path.errors.each {
+					println it
+				}
+				render 'error'
+				return
+			}
 		}
+		
 		
 		flash.message = "The quest is delivered";
 				
