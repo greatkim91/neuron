@@ -33,9 +33,9 @@ class PathController {
 			return
 		}
 		
-		def pathInstances = Path.findAllByQuestion(pathInstance.question)
+		def pathInstances = Path.findAllByQuest(pathInstance.quest)
 
-		[pathInstance: pathInstance, questionInstance: pathInstance.question, pathInstances: pathInstances]
+		[pathInstance: pathInstance, questInstance: pathInstance.quest, pathInstances: pathInstances]
 	}
 	
     def answer() { 
@@ -75,7 +75,7 @@ class PathController {
 			return
 		}
 		
-		def newPath = new Path(parent: path, question: path.question, user: nextUser)
+		def newPath = new Path(parent: path, quest: path.quest, user: nextUser)
 		
 		if (!newPath.save(flush: true)) {
 			path.errors.each {
@@ -85,7 +85,7 @@ class PathController {
 			return
 		}
 		
-		flash.message = "The question is delivered";
+		flash.message = "The quest is delivered";
 				
 		redirect(action: "show", id: path.id)
 	}

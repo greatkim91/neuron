@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'quest.label', default: 'Quest')}" />
+		<g:set var="entityName" value="${message(code: 'question.label', default: 'Question')}" />
 		<title><g:message code="default.show.label" args="[entityName]" /></title>
 	</head>
 	<body>
@@ -123,6 +123,11 @@
 					<g:fieldValue bean="${pathInstance}" field="answer"/> |
 					<g:fieldValue bean="${pathInstance.user}" field="name"/> |
 					<g:if test="${pathInstance.chosen == true}">★Chosen★</g:if>
+					<g:form action="choose" method="post">
+						<g:hiddenField name="id" value="${questInstance?.id}" />
+						<g:hiddenField name="path_id" value="${pathInstance.id}" />
+						<g:submitButton action="choose" name="choose" value="Choose"/>
+					</g:form>
 					<hr/>
 				</li>
 				</g:if>
@@ -132,16 +137,8 @@
 		</div>
 		
 		<div>
-			<g:form controller="path" action="answer" method="post">
-				<g:hiddenField name="id" value="${pathInstance?.id}" />
-				<textarea name="answer"></textarea>
-				<g:actionSubmit action="answer" value="Answer"/>
-			</g:form>
-		</div>
-		
-		<div>
-			<g:form controller="path" action="deliver" method="post">
-				<g:hiddenField name="id" value="${pathInstance?.id}" />
+			<g:form action="deliver" method="post">
+				<g:hiddenField name="id" value="${questInstance?.id}" />
 				<g:textField name="next_username"/>
 				<g:actionSubmit action="deliver" value="Deliver"/>
 			</g:form>

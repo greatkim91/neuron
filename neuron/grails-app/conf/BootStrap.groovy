@@ -1,6 +1,7 @@
 import com.kkk.neuron.auth.Role
 import com.kkk.neuron.auth.User
-import com.kkk.neuron.auth.UserRole;
+import com.kkk.neuron.auth.UserRole
+import com.kkk.neuron.quest.Reward
 
 class BootStrap {
 
@@ -21,6 +22,11 @@ class BootStrap {
 		newUser 'aa7', '1', 'AA7', userRole
 		newUser 'aa8', '1', 'AA8', userRole
 		newUser 'aa9', '1', 'AA9', userRole
+		
+		new Reward(
+			owner: User.findByUsername("dykim"),
+			balance: 1000
+			).save(flush: true)
 		
 		assert User.count() == 13
 		assert Role.count() == 2

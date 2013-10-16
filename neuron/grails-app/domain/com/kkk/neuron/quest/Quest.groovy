@@ -2,11 +2,11 @@ package com.kkk.neuron.quest
 
 import com.kkk.neuron.auth.User;
 
-class Question {
+class Quest {
 
 	String title
 	String content
-	User questioner
+	User owner
 	
 	Date periodFrom
 	Date periodTo
@@ -20,6 +20,6 @@ class Question {
     static constraints = {
 		title blank: false
 		content blank: false
-		questioner blank: false
+		owner blank: false
     }
 }

@@ -5,9 +5,9 @@ package com.kkk.neuron.quest
 import org.junit.*
 import grails.test.mixin.*
 
-@TestFor(QuestionController)
-@Mock(Question)
-class QuestionControllerTests {
+@TestFor(QuestController)
+@Mock(Quest)
+class QuestControllerTests {
 
     def populateValidParams(params) {
         assert params != null
@@ -47,7 +47,7 @@ class QuestionControllerTests {
 
         assert response.redirectedUrl == '/question/show/1'
         assert controller.flash.message != null
-        assert Question.count() == 1
+        assert Quest.count() == 1
     }
 
     void testShow() {
@@ -57,7 +57,7 @@ class QuestionControllerTests {
         assert response.redirectedUrl == '/question/list'
 
         populateValidParams(params)
-        def question = new Question(params)
+        def question = new Quest(params)
 
         assert question.save() != null
 
@@ -75,7 +75,7 @@ class QuestionControllerTests {
         assert response.redirectedUrl == '/question/list'
 
         populateValidParams(params)
-        def question = new Question(params)
+        def question = new Quest(params)
 
         assert question.save() != null
 
@@ -95,7 +95,7 @@ class QuestionControllerTests {
         response.reset()
 
         populateValidParams(params)
-        def question = new Question(params)
+        def question = new Quest(params)
 
         assert question.save() != null
 
@@ -139,17 +139,17 @@ class QuestionControllerTests {
         response.reset()
 
         populateValidParams(params)
-        def question = new Question(params)
+        def question = new Quest(params)
 
         assert question.save() != null
-        assert Question.count() == 1
+        assert Quest.count() == 1
 
         params.id = question.id
 
         controller.delete()
 
-        assert Question.count() == 0
-        assert Question.get(question.id) == null
+        assert Quest.count() == 0
+        assert Quest.get(question.id) == null
         assert response.redirectedUrl == '/question/list'
     }
 }

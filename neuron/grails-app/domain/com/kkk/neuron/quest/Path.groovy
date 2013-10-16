@@ -6,7 +6,7 @@ import com.kkk.neuron.auth.User
 
 class Path {
 
-	Question question
+	Quest quest
 	User user
 	long reward
 	
@@ -19,7 +19,7 @@ class Path {
 	static hasMany = [children: Path]
 	
     static constraints = {
-		question blank: false
+		quest blank: false
 		user blank: false
 		answer nullable: true
 		parent nullable: true

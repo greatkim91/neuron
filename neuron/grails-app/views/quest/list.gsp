@@ -1,10 +1,10 @@
 
-<%@ page import="com.kkk.neuron.quest.Path" %>
+<%@ page import="com.kkk.neuron.quest.Quest" %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'path.label', default: 'Path')}" />
+		<g:set var="entityName" value="${message(code: 'quest.label', default: 'Quest')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
 	</head>
 	<body>
@@ -15,7 +15,7 @@
 				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
-		<div id="list-path" class="content scaffold-list" role="main">
+		<div id="list-quest" class="content scaffold-list" role="main">
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
 			<div class="message" role="status">${flash.message}</div>
@@ -38,27 +38,27 @@
 					</tr>
 				</thead>
 				<tbody>
-				<g:each in="${pathInstanceList}" status="i" var="pathInstance">
+				<g:each in="${questInstanceList}" status="i" var="questInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${pathInstance.id}">${fieldValue(bean: pathInstance.quest, field: "title")}</g:link></td>
+						<td><g:link action="show" id="${questInstance.id}">${fieldValue(bean: questInstance, field: "title")}</g:link></td>
 					
-						<td>${fieldValue(bean: pathInstance.quest, field: "content")}</td>
+						<td>${fieldValue(bean: questInstance, field: "content")}</td>
 					
-						<td><g:formatDate date="${pathInstance.quest.dateCreated}" /></td>
+						<td><g:formatDate date="${questInstance.dateCreated}" /></td>
 					
-						<td><g:formatDate date="${pathInstance.quest.lastUpdated}" /></td>
+						<td><g:formatDate date="${questInstance.lastUpdated}" /></td>
 					
-						<td><g:formatDate date="${pathInstance.quest.periodFrom}" /></td>
+						<td><g:formatDate date="${questInstance.periodFrom}" /></td>
 						
-						<td>${fieldValue(bean: pathInstance.quest, field: "owner.name")}</td>
+						<td>${fieldValue(bean: questInstance, field: "owner.name")}</td>
 					
 					</tr>
 				</g:each>
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${pathInstanceTotal}" />
+				<g:paginate total="${questInstanceTotal}" />
 			</div>
 		</div>
 	</body>
