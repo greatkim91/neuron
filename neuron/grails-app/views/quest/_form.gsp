@@ -40,5 +40,11 @@
 		<span class="required-indicator">*</span>
 	</label>
 	<g:field name="reward" type="number" value="${questInstance.reward}" required=""/>
+	(Maximum reward: 
+	<g:if test="${reward}">
+		<g:fieldValue bean="${reward}" field="balance"  />
+	</g:if>
+	<g:if test="${!reward}">0</g:if>
+	)
 </div>
 

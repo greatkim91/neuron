@@ -2,12 +2,16 @@ package neuron
 
 import grails.plugin.springsecurity.annotation.Secured;
 
+@Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
 class HelloController {
 	
 	def springSecurityService
 
-	@Secured(['ROLE_ADMIN'])
     def index() { 
-		render("hello world!" + springSecurityService.currentUser.username);
+		render("hello world!" + springSecurityService.currentUser?.username);
+	}
+	
+	def info() {
+		
 	}
 }

@@ -96,11 +96,14 @@
 				</g:if>
 				
 				<li class="fieldcontain">
-				<span id="delivery-label" class="property-label">Delivery</span>
+				<span id="deliver-from-label" class="property-label">Delivered from</span>
 				<span class="property-value" aria-labelledby="reward-label">
-					<g:each in="${pathInstances}" var="pathInstance">
-						<g:fieldValue bean="${pathInstance.user}" field="name"/> (<g:fieldValue bean="${pathInstance}" field="reward"/>)
-					</g:each>
+					<g:if test="${pathInstance.parent != null}">
+						<g:fieldValue bean="${pathInstance}" field="parent.user.name"/>
+					</g:if>
+					<g:if test="${pathInstance.parent == null}">
+						<g:fieldValue bean="${questInstance}" field="owner.name"/>
+					</g:if>
 				</span>
 				</li>
 			

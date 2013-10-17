@@ -25,6 +25,19 @@
 			Welcome <sec:loggedInUserInfo field="username"/>
 			</sec:ifLoggedIn>
 			</span>
+			<div class="nav">
+				<ul>
+					<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
+					<li><g:link controller="quest">My Quest</g:link></li>
+					<li><g:link controller="path">Inbox</g:link></li>
+					<li><g:link controller="rewardHistory">Reward</g:link></li>
+					<li>
+						<g:form controller="logout" method="post">
+							<g:submitButton name="logout" value="logout"/>
+						</g:form>
+					</li>
+				</ul>
+			</div>
 		</div>
 		<g:layoutBody/>
 		<div class="footer" role="contentinfo"></div>

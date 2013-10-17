@@ -29,10 +29,19 @@ class QuestController {
     }
 
     def create() {
-        [questInstance: new Quest(params)]
+        [questInstance: new Quest(params), reward: Reward.findByOwner(springSecurityService.currentUser)]
     }
 
     def save() {
+		
+		def reward = Reward.findByOwner(springSecurityService.currentUser)
+		
+		if (reward?.balance < params.reward.toLong()) {
+			flash.message = 'Quest reward should be less than your reward'
+			redirect(action: "create", params: params)
+			return
+		}
+		
 		params.owner = springSecurityService.currentUser
         def questInstance = new Quest(params)
         if (!questInstance.save(flush: true)) {
