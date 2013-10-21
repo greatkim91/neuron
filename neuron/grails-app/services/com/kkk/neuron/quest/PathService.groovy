@@ -6,6 +6,7 @@ import com.kkk.neuron.auth.User
 class PathService {
 	
 	def mailService
+	def backgroundService
 
     def deliver(Path parentPath, Long nextUserId) {
 		def nextUser = User.get(nextUserId)
@@ -34,13 +35,15 @@ class PathService {
 			throw new NeuronException("Could not deliver to email");
 		}
 		
-		mailService.sendMail {
-			to email
-			from "lab@nextree.co.kr"
-			subject "You've got a quest"
-			body (view: "/emailconfirmation/confirmationRequest",
-				model: [parentPath: parentPath, email: email]
-				)
+		backgroundService.execute("Send mail") {
+			mailService.sendMail {
+				to email
+				from "lab@nextree.co.kr"
+				subject "You've got a quest"
+				body (view: "/emailconfirmation/confirmationRequest",
+						model: [parentPath: parentPath, email: email]
+						)
+			}
 		}
 		
 	}
