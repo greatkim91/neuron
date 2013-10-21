@@ -47,26 +47,6 @@ class QuestController {
 			return
 		}
 		
-//		def reward = Reward.findByOwner(springSecurityService.currentUser)
-//		
-//		if (reward?.balance < params.reward.toLong()) {
-//			flash.message = 'Quest reward should be less than your reward'
-//			redirect(action: "create", params: params)
-//			return
-//		}
-//		
-//		params.owner = springSecurityService.currentUser
-//        def questInstance = new Quest(params)
-//        if (!questInstance.save(flush: true)) {
-//            render(view: "create", model: [questInstance: questInstance])
-//            return
-//        }
-//		
-//		rewardService.withdraw(
-//			springSecurityService.currentUser,
-//			params.reward?.toLong(), 
-//			"Withdraw for Quest # " + questInstance.id)
-
         flash.message = message(code: 'default.created.message', args: [message(code: 'quest.label', default: 'Quest'), questInstance.id])
         redirect(action: "show", id: questInstance.id)
     }
