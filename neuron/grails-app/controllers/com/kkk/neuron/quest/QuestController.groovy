@@ -134,7 +134,8 @@ class QuestController {
 			return
 		}
 		
-		pathService.deliver(quest.rootPath, params.next_user_id)
+		def path = Path.findByQuestAndUser(quest, springSecurityService.currentUser)
+		pathService.deliver(path, params.next_user_id)
 		
 		flash.message = "The quest is delivered";
 				
@@ -150,7 +151,8 @@ class QuestController {
 			return
 		}
 		
-		pathService.deliverToEmail(quest.rootPath, params.email)
+		def path = Path.findByQuestAndUser(quest, springSecurityService.currentUser)
+		pathService.deliverToEmail(path, params.email)
 		
 		flash.message = "The quest is delivered to email";
 				

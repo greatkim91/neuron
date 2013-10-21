@@ -15,12 +15,9 @@ class Quest {
 	Date dateCreated
 	Date lastUpdated
 	
-	Path rootPath
-	
     static constraints = {
 		title blank: false
 		content blank: false
 		owner blank: false
-		rootPath nullable: true
     }
 }

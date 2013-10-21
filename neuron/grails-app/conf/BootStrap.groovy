@@ -41,9 +41,9 @@ class BootStrap {
 		newRelationship "yjkim", "aa6"
 		newRelationship "yjkim", "aa7"
 		
-		assert User.count() == 13
-		assert Role.count() == 2
-		assert UserRole.count() == 13
+//		assert User.count() == 13
+//		assert Role.count() == 2
+//		assert UserRole.count() == 13
     }
 	
 	private newUser(String username, String password, String name, Role role) {

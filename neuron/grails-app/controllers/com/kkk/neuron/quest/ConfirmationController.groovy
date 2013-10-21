@@ -8,7 +8,7 @@ import com.kkk.neuron.auth.User
 class ConfirmationController {
 	
 	def pathService
-	def deliveryService
+	def confirmationService
 	
 	static allowedMethods = [register: "POST"]
 
@@ -20,7 +20,7 @@ class ConfirmationController {
 		
 		def newUser = new User(params)
 		
-		deliveryService.register(newUser, params.path_id, params.email)
+		confirmationService.register(newUser, params.path_id, params.email)
 		
 		if (newUser.hasErrors()) {
 			render(view: "register", model: [newUser: newUser])
@@ -30,7 +30,7 @@ class ConfirmationController {
 		def parentPath = Path.get(params.path_id)
 		def newPath = Path.findByParentAndUser(parentPath, newUser)
 		
-		redirect(action: "show", id: newUser.id, params: [path_id: newPath.id])
+		redirect(action: "show", id: newUser.id, params: [path_id: newPath?.id])
 	}
 	
 	def show(Long id) {

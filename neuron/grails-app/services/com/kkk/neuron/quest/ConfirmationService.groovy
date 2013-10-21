@@ -1,12 +1,13 @@
-package com.kkk.neuron
+package com.kkk.neuron.quest
 
+import com.kkk.neuron.NeuronException;
 import com.kkk.neuron.auth.Role
 import com.kkk.neuron.auth.UserRole
 import com.kkk.neuron.quest.Delivery
 import com.kkk.neuron.quest.Path
 import com.kkk.neuron.quest.Relationship
 
-class DeliveryService {
+class ConfirmationService {
 	
 	def pathService
 

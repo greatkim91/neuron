@@ -22,7 +22,6 @@ class QuestService {
 		if (!path.save(flush:true)) {
 			
 		}
-		quest.rootPath = path
 		
 		rewardService.withdraw(
 			quest.owner,
