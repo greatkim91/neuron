@@ -13,6 +13,7 @@ class QuestController {
 	def springSecurityService
 	def rewardService
 	def questService
+	def pathService
 	
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -133,24 +134,25 @@ class QuestController {
 			return
 		}
 		
-		params.next_user_id.each {
-			def nextUser = User.get(it)
-			if (!nextUser) {
-				return
-			}
-			
-			def newPath = new Path(quest: quest, user: nextUser)
-			if (!newPath.save(flush: true)) {
-				path.errors.each {
-					println it
-				}
-				render 'error'
-				return
-			}
-		}
-		
+		pathService.deliver(quest.rootPath, params.next_user_id)
 		
 		flash.message = "The quest is delivered";
+				
+		redirect(action: "show", id: quest.id)
+	}
+	
+	def deliverToEmail() {
+		def quest = Quest.get(params.id)
+		
+		if (!quest) {
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'quest.label', default: 'Quest'), id])
+			redirect(action: "show", id: params.id)
+			return
+		}
+		
+		pathService.deliverToEmail(quest.rootPath, params.email)
+		
+		flash.message = "The quest is delivered to email";
 				
 		redirect(action: "show", id: quest.id)
 	}

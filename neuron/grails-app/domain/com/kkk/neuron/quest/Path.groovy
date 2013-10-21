@@ -40,8 +40,8 @@ class Path {
 	}
 	
 	def choose(long r) {
-		reward = r * 0.8
 		if (parent) {
+			reward = r * 0.8
 			parent.choose(r - reward)
 		}
 	}

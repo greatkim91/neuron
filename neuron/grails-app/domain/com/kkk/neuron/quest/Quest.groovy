@@ -15,11 +15,12 @@ class Quest {
 	Date dateCreated
 	Date lastUpdated
 	
-	static hasMany = [path: Path]
+	Path rootPath
 	
     static constraints = {
 		title blank: false
 		content blank: false
 		owner blank: false
+		rootPath nullable: true
     }
 }

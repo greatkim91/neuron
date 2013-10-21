@@ -8,6 +8,7 @@ import grails.plugin.springsecurity.annotation.Secured;
 class PathController {
 	
 	def springSecurityService
+	def pathService;
 
 	static allowedMethods = [save: "POST", deliver: "POST"]
 	
@@ -19,7 +20,7 @@ class PathController {
 		params.max = Math.min(max ?: 10, 100)
 		def pathUser = springSecurityService.currentUser
 		def w = Path.where {
-			user == pathUser
+			user == pathUser && quest.owner != pathUser
 		}
 		
 		[pathInstanceList: w.list(params), pathInstanceTotal: w.count()]
@@ -69,23 +70,25 @@ class PathController {
 			return
 		}
 		
-		params.next_user_id.each {
-			def nextUser = User.get(it)
-			if (!nextUser) {
-				return
-			}
-			
-			def newPath = new Path(parent: path, quest: path.quest, user: nextUser)
-			if (!newPath.save(flush: true)) {
-				path.errors.each {
-					println it
-				}
-				render 'error'
-				return
-			}
-		}
+		pathService.deliver(path, params.next_user_id)
 		
 		flash.message = "The quest is delivered";
+				
+		redirect(action: "show", id: path.id)
+	}
+	
+	def deliverToEmail() {
+		def path = Path.get(params.id)
+		
+		if (!path) {
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'path.label', default: 'Path'), id])
+			redirect(action: "show", id: params.id)
+			return
+		}
+		
+		pathService.deliverToEmail(path, params.email)
+		
+		flash.message = "The quest is delivered to email";
 				
 		redirect(action: "show", id: path.id)
 	}

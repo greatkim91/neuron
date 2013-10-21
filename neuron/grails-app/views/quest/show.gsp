@@ -148,5 +148,13 @@
 			</g:form>
 		</div>
 		
+		<div>
+			<g:form action="deliverToEmail" method="post">
+				<g:hiddenField name="id" value="${questInstance?.id}" />
+				<g:textField name="email" />
+			<g:actionSubmit action="deliverToEmail" value="Deliver To Email"/>
+			</g:form>
+		</div>
+		
 	</body>
 </html>

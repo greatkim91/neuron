@@ -18,6 +18,12 @@ class QuestService {
 			throw new NeuronException("Could not save the quest.");
 		}
 		
+		def path = new Path(quest: quest, user: quest.owner)
+		if (!path.save(flush:true)) {
+			
+		}
+		quest.rootPath = path
+		
 		rewardService.withdraw(
 			quest.owner,
 			quest.reward,
