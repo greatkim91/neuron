@@ -1,16 +1,18 @@
 package com.kkk.neuron.quest
 
-import grails.plugin.springsecurity.annotation.Secured;
+import grails.plugin.springsecurity.annotation.Secured
 
 import org.springframework.dao.DataIntegrityViolationException
 
-import com.kkk.neuron.auth.User;
+import com.kkk.neuron.NeuronException
+import com.kkk.neuron.auth.User
 
 @Secured(['IS_AUTHENTICATED_REMEMBERED'])
 class QuestController {
 
 	def springSecurityService
 	def rewardService
+	def questService
 	
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -34,25 +36,36 @@ class QuestController {
 
     def save() {
 		
-		def reward = Reward.findByOwner(springSecurityService.currentUser)
+		def questInstance = new Quest(params)
+		questInstance.owner = springSecurityService.currentUser
 		
-		if (reward?.balance < params.reward.toLong()) {
-			flash.message = 'Quest reward should be less than your reward'
-			redirect(action: "create", params: params)
+		try {
+			questService.save(questInstance)
+		} catch (NeuronException e) {
+			flash.message = e.message
+			render(view: "create", model: [questInstance: questInstance])
 			return
 		}
 		
-		params.owner = springSecurityService.currentUser
-        def questInstance = new Quest(params)
-        if (!questInstance.save(flush: true)) {
-            render(view: "create", model: [questInstance: questInstance])
-            return
-        }
-		
-		rewardService.withdraw(
-			springSecurityService.currentUser,
-			params.reward?.toLong(), 
-			"Withdraw for Quest # " + questInstance.id)
+//		def reward = Reward.findByOwner(springSecurityService.currentUser)
+//		
+//		if (reward?.balance < params.reward.toLong()) {
+//			flash.message = 'Quest reward should be less than your reward'
+//			redirect(action: "create", params: params)
+//			return
+//		}
+//		
+//		params.owner = springSecurityService.currentUser
+//        def questInstance = new Quest(params)
+//        if (!questInstance.save(flush: true)) {
+//            render(view: "create", model: [questInstance: questInstance])
+//            return
+//        }
+//		
+//		rewardService.withdraw(
+//			springSecurityService.currentUser,
+//			params.reward?.toLong(), 
+//			"Withdraw for Quest # " + questInstance.id)
 
         flash.message = message(code: 'default.created.message', args: [message(code: 'quest.label', default: 'Quest'), questInstance.id])
         redirect(action: "show", id: questInstance.id)

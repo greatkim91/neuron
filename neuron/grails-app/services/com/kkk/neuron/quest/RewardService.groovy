@@ -1,5 +1,6 @@
 package com.kkk.neuron.quest
 
+import com.kkk.neuron.NeuronException
 import com.kkk.neuron.auth.User
 
 class RewardService {
@@ -44,6 +45,9 @@ class RewardService {
 							type: "W",
 							balance: reward.balance,
 							note: note))
-		reward.save(flush:true)
+		
+		if (!reward.save(flush:true)) {
+			throw new NeuronException("Could not save reward")
+		}
 	}
 }
